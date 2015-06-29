@@ -2,9 +2,15 @@
 
 ## What is `mush`?
 
-`mush` is a software implementation of the Musha Shugyo game by Luca De Marini,
-providing tools to test the game system, effective AIs that play the game, and
-a command-line interface to play the game.
+`mush` is a software implementation of the Musha Shugyo tabletop game by Luca De
+Marini, providing tools to stress-test the combat system in the game, effective
+AIs that play the game, and a command-line interface to play the game in
+interactive mode.
+
+Musha Shugyo is a game in Italian also available in English. The website however
+is in Italian: www.acchiappasogni.org/msrpg
+
+The `mush` interactive interface is entirely in English.
 
 ## Who develops `mush`?
 
