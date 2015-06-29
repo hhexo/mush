@@ -1,0 +1,2 @@
+
+# RUN: mush-stress -c0 -t
