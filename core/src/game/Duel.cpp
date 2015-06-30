@@ -598,6 +598,10 @@ bool Duel::performAttack(Character &attacker, Character &defender,
                                          << "SP due to defence)" << std::endl;
                     }
                 }
+                // Enforce maximum SP.
+                if(defender.cur_sp > 6) {
+                    defender.cur_sp = 6;
+                }
                 
                 // Update control system.
                 attacker.actrl->updateAfterMove(attacker, defender, attack_move, false);
