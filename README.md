@@ -54,10 +54,31 @@ First of all get a clone of `mush` through either Git or a tarfile.
 Then, `make everything` will build all projects and will create a `product`
 subdirectory containing a release of the final product.
 
+### Um... can you tell me what to do step by step?
+
+When cloning from Git:
+
+    cd a_path_with_NO_spaces_in_it
+    git clone https://github.com/hhexo/mush.git mush
+    cd mush
+    make everything
+
+When getting a tar or zip file:
+
+    # Extract the archive file into a directory with NO spaces in it
+    cd where_you_have_extracted_it
+    make everything
+
 ### Known issues
 
-Currently the build system does not allow you to have spaces or special
-characters in the path leading to the directory you have extracted `mush` in.
+Since I have had several reports of this... Be aware that currently the build
+system for `mush` does not allow you to have spaces in the path leading to the
+directory you have extracted `mush` in.
 
-_This is a limitation of GNU Make._ I am trying to find a workaround but 
-technically it cannot be fixed properly within this build system.
+_This is a limitation of any UNIX Make tool (including GNU Make) since the tool
+was born. It's a design choice that Make separates variables and items by white
+space: if you have spaces in your path Make will consider it as multiple paths._
+
+I am trying to find a workaround but technically the issue cannot be fixed
+within this build system. For now, just put `mush` in a path containing no
+spaces.
