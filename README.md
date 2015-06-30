@@ -52,4 +52,12 @@ I think Python 3.x should be OK too, but I have not tested it.
 First of all get a clone of `mush` through either Git or a tarfile.
 
 Then, `make everything` will build all projects and will create a `product`
-subdirectory containing a release of the final products.
+subdirectory containing a release of the final product.
+
+### Known issues
+
+Currently the build system does not allow you to have spaces or special
+characters in the path leading to the directory you have extracted `mush` in.
+
+_This is a limitation of GNU Make._ I am trying to find a workaround but 
+technically it cannot be fixed properly within this build system.
