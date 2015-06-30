@@ -594,7 +594,9 @@ bool Duel::performAttack(Character &attacker, Character &defender,
                     defender.cur_sp += preliminary_damage / 3;
                     if(m_report_stream) {
                         *m_report_stream << "  (" << defender.name
-                                         << " gains " << (preliminary_damage / 3)
+                                         << " has avoided " << preliminary_damage
+                                         << " potential damage and gains "
+                                         << (preliminary_damage / 3)
                                          << "SP due to defence)" << std::endl;
                     }
                 }
@@ -697,7 +699,9 @@ bool Duel::performAttack(Character &attacker, Character &defender,
                 defender.cur_sp += preliminary_damage / 3;
                 if(m_report_stream) {
                     *m_report_stream << "  (" << defender.name
-                                     << " gains " << (preliminary_damage / 3)
+                                     << " has avoided " << preliminary_damage
+                                     << " potential damage and gains "
+                                     << (preliminary_damage / 3)
                                      << "SP due to defence)" << std::endl;
                 }
             }
