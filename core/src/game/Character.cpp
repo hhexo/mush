@@ -95,8 +95,6 @@ void Character::dump(std::ostream &stream) {
         stream << std::endl;
     }
     stream << std::endl;
-    //aai->dumpState(*this);
-    //dai->dumpState(*this);
 }
 
 void Character::brief(std::ostream &stream) {
@@ -124,57 +122,6 @@ std::shared_ptr<Character> generateRandomCharacter() {
     
     std::uniform_int_distribution<int> rsp(SP_BEGIN__, SP_END__ - 1);
     SPMode sp = static_cast<SPMode>(rsp(getRandomGenerator()));
-/*
-    std::uniform_int_distribution<int> ai_dist(1, 16);
-    int aai = ai_dist(getRandomGenerator());
-    AttackAI *attack_ai = nullptr;
-    if(aai == 1) {
-        attack_ai = new Grunt();
-    } else if(aai == 2) {
-        attack_ai = new Brawler();
-    } else if(aai == 3) {
-        attack_ai = new SPUser();
-    } else if(aai == 4) {
-        attack_ai = new CounterAttacker();
-    } else if(aai == 5) {
-        attack_ai = new TacticalAttacker();
-    } else if(aai == 6) {
-        attack_ai = new KillingChain();
-        sp = SP_DAMAGE;
-        if(at < df) {
-            std::swap(at, df);
-        }
-    } else if(aai > 11) {
-        attack_ai = new EvolveAttackAI();
-    } else if(aai > 6) {
-        attack_ai = new MarkovAttackAI();
-    } else {
-        attack_ai = new DumbAttacker();
-    }
-
-    std::uniform_int_distribution<int> aid_dist(0, 10);
-    int dai = aid_dist(getRandomGenerator());
-    DefendAI *defend_ai = nullptr;
-    if(aai == 4) {
-        defend_ai = new CounterAttackDefender();
-    }
-    else if(aai == 5) {
-        defend_ai = new TacticalDefender();
-    }
-    else if(dai == 1) {
-        defend_ai = new CautiousDefender();
-    } else if(dai == 2 && aai != 6) {
-        defend_ai = new CounterAttackDefender();
-    } else if(dai == 3) {
-        defend_ai = new TacticalDefender();
-    } else if(dai > 4) {
-        defend_ai = new EvolveDefendAI();
-    } else {
-        defend_ai = new DumbDefender();
-    }
-    AttackAI *attack_ai = (sp == SP_COMBO) ? new MarkovAttackAI() : new EvolveAttackAI();
-    DefendAI *defend_ai = new EvolveDefendAI();
-    */
 
     auto actrl = (sp == SP_COMBO) ? std::make_shared<ctrl::MarkovAIAttack>()
                                   : std::make_shared<ctrl::EvolveAIAttack>();
