@@ -588,6 +588,17 @@ bool Duel::performAttack(Character &attacker, Character &defender,
                 if(m_report_stream) {
                     *m_report_stream << "... and misses." << std::endl;
                 }
+
+                // Defender gains SP.
+                if(defender.sp == SP_DEFENCE) {
+                    defender.cur_sp += preliminary_damage / 3;
+                    if(m_report_stream) {
+                        *m_report_stream << "  (" << defender.name
+                                         << " gains " << (preliminary_damage / 3)
+                                         << "SP due to defence)" << std::endl;
+                    }
+                }
+                
                 // Update control system.
                 attacker.actrl->updateAfterMove(attacker, defender, attack_move, false);
                 // Get out, attack failed.
