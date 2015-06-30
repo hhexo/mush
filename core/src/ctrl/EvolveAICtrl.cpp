@@ -404,12 +404,19 @@ void EvolveAIAttack::updateAfterMatch(game::Character const &me,
     std::lock_guard<std::mutex> protect(m_content_mutex);
 
     updateX(has_won, m_ap_to_sp_matrix, m_last_ap_to_sp_decisions[me.uid]);
+    m_last_ap_to_sp_decisions.erase(me.uid);
     updateX(has_won, m_fall_matrix, m_last_fall_decisions[me.uid]);
+    m_last_fall_decisions.erase(me.uid);
     updateX(has_won, m_lower_matrix, m_last_lower_decisions[me.uid]);
+    m_last_lower_decisions.erase(me.uid);
     updateX(has_won, m_concat_matrix, m_last_concat_decisions[me.uid]);
+    m_last_concat_decisions.erase(me.uid);
     updateX(has_won, m_agility_matrix, m_last_agility_decisions[me.uid]);
+    m_last_agility_decisions.erase(me.uid);
     updateX(has_won, m_at_boost_matrix, m_last_at_boost_decisions[me.uid]);
+    m_last_at_boost_decisions.erase(me.uid);
     updateX(has_won, m_dmg_boost_matrix, m_last_dmg_boost_decisions[me.uid]);
+    m_last_dmg_boost_decisions.erase(me.uid);
 
     // Moves are a special case.
     while(!m_last_move_decisions[me.uid].empty()) {
@@ -430,6 +437,7 @@ void EvolveAIAttack::updateAfterMatch(game::Character const &me,
         }
         m_last_move_decisions[me.uid].pop_back();
     }
+    m_last_move_decisions.erase(me.uid);
 }
 
 
@@ -597,10 +605,15 @@ void EvolveAIDefence::updateAfterMatch(game::Character const &me,
     std::lock_guard<std::mutex> protect(m_content_mutex);
 
     updateX(has_won, m_break_matrix, m_last_break_decisions[me.uid]);
+    m_last_break_decisions.erase(me.uid);
     updateX(has_won, m_lower_matrix, m_last_lower_decisions[me.uid]);
+    m_last_lower_decisions.erase(me.uid);
     updateX(has_won, m_agility_matrix, m_last_agility_decisions[me.uid]);
+    m_last_agility_decisions.erase(me.uid);
     updateX(has_won, m_df_boost_matrix, m_last_df_boost_decisions[me.uid]);
+    m_last_df_boost_decisions.erase(me.uid);
     updateX(has_won, m_dmg_boost_matrix, m_last_dmg_boost_decisions[me.uid]);
+    m_last_dmg_boost_decisions.erase(me.uid);
 
     // Moves are a special case.
     while(!m_last_move_decisions[me.uid].empty()) {
@@ -621,6 +634,7 @@ void EvolveAIDefence::updateAfterMatch(game::Character const &me,
         }
         m_last_move_decisions[me.uid].pop_back();
     }
+    m_last_move_decisions.erase(me.uid);
 }
 
 
@@ -845,6 +859,7 @@ void MarkovAIAttack::updateAfterMatch(game::Character const &me,
                                        dr.goodness);
         m_last_markov_decisions[me.uid].pop_back();
     }
+    m_last_markov_decisions.erase(me.uid);
 }
 
 }
