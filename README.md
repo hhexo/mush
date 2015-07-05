@@ -54,6 +54,9 @@ First of all get a clone of `mush` through either Git or a tarfile.
 Then, `make everything` will build all projects and will create a `product`
 subdirectory containing a release of the final product.
 
+Note that the build runs a "stress test" of the Musha Shugyo system and AIs, and
+the stress test may take a long time on slow computers.
+
 ### Um... can you tell me what to do step by step?
 
 When cloning from Git:
