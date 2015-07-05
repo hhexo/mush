@@ -21,6 +21,8 @@ namespace ctrl {
 
 DumbAttackControl::~DumbAttackControl() {}
 
+char const * const DumbAttackControl::getName() const { return "Dumb"; }
+
 int DumbAttackControl::shouldSpendAPToGainSP(game::Character const &me,
                           game::Character const &opponent,
                           bool far) {
@@ -30,7 +32,8 @@ int DumbAttackControl::shouldSpendAPToGainSP(game::Character const &me,
 bool DumbAttackControl::shouldSpendAPToFallStanding(game::Character const &me,
                                  game::Character const &opponent,
                                  bool far) {
-    return false;
+    // Avoid death!
+    return me.cur_life == 1;
 }
 
 game::Move const & DumbAttackControl::getNextMove(game::Character const &me,
@@ -96,6 +99,8 @@ void DumbAttackControl::updateAfterMatch(game::Character const &me,
 
 DumbDefendControl::~DumbDefendControl() {}
 
+char const * const DumbDefendControl::getName() const { return "Dumb"; }
+
 game::Move const & DumbDefendControl::getCounterMove(game::Character const &me,
                                   game::Character const &opponent,
                                   bool far,
@@ -107,7 +112,8 @@ bool DumbDefendControl::shouldSpendSPToComboBreak(game::Character const &me,
                                game::Character const &opponent,
                                bool far,
                                game::Move const &opponent_move) {
-    return false;
+    // Break only if we're about to die.
+    return opponent_move.damage(1, opponent.at, opponent.df, 0) > me.cur_life;
 }
 
 bool DumbDefendControl::shouldSpendSPToLowerAPCost(game::Character const &me,

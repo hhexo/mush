@@ -27,6 +27,8 @@ class DumbAttackControl : public AttackControl {
 public:
     virtual ~DumbAttackControl();
 
+    char const * const getName() const override;
+
     int shouldSpendAPToGainSP(game::Character const &me,
                               game::Character const &opponent,
                               bool far) override;
@@ -81,6 +83,8 @@ public:
 class DumbDefendControl : public DefendControl {
 public:
     ~DumbDefendControl();
+
+    char const * const getName() const override;
 
     game::Move const & getCounterMove(game::Character const &me,
                                       game::Character const &opponent,

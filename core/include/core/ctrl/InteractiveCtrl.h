@@ -26,6 +26,8 @@ class InteractiveAttackControl : public AttackControl {
 public:
     virtual ~InteractiveAttackControl();
 
+    char const * const getName() const override;
+
     int shouldSpendAPToGainSP(game::Character const &me,
                               game::Character const &opponent,
                               bool far) override;
@@ -80,6 +82,8 @@ public:
 class InteractiveDefenceControl : public DefendControl {
 public:
     ~InteractiveDefenceControl();
+
+    char const * const getName() const override;
 
     game::Move const & getCounterMove(game::Character const &me,
                                       game::Character const &opponent,

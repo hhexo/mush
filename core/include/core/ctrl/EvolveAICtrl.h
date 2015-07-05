@@ -97,6 +97,8 @@ public:
     EvolveAIAttack();
     virtual ~EvolveAIAttack();
 
+    char const * const getName() const override;
+
     int shouldSpendAPToGainSP(game::Character const &me,
                               game::Character const &opponent,
                               bool far) override;
@@ -205,6 +207,8 @@ protected:
 class EvolveAIDefence : public DefendControl {
 public:
     ~EvolveAIDefence();
+
+    char const * const getName() const override;
 
     game::Move const & getCounterMove(game::Character const &me,
                                       game::Character const &opponent,
@@ -354,6 +358,8 @@ class MarkovAIAttack : public EvolveAIAttack {
 public:
     MarkovAIAttack();
     virtual ~MarkovAIAttack();
+
+    char const * const getName() const override;
 
     game::Move const & getNextMove(game::Character const &me,
                                    game::Character const &opponent,

@@ -202,6 +202,8 @@ EvolveAIAttack::EvolveAIAttack() {}
 
 EvolveAIAttack::~EvolveAIAttack() {}
 
+char const * const EvolveAIAttack::getName() const { return "Evolve"; }
+
 int EvolveAIAttack::shouldSpendAPToGainSP(game::Character const &me,
                           game::Character const &opponent,
                           bool far) {
@@ -442,6 +444,8 @@ void EvolveAIAttack::updateAfterMatch(game::Character const &me,
 
 
 EvolveAIDefence::~EvolveAIDefence() {}
+
+char const * const EvolveAIDefence::getName() const { return "Evolve"; }
 
 game::Move const & EvolveAIDefence::getCounterMove(game::Character const &me,
                                   game::Character const &opponent,
@@ -756,6 +760,8 @@ void MarkovDecisionMatrix::dump(std::string const & with_name,
 MarkovAIAttack::MarkovAIAttack() : EvolveAIAttack() {}
 
 MarkovAIAttack::~MarkovAIAttack() {}
+
+char const * const MarkovAIAttack::getName() const { return "Markov"; }
 
 game::Move const & MarkovAIAttack::getNextMove(game::Character const &me,
                                game::Character const &opponent,

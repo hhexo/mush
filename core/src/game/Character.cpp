@@ -16,6 +16,7 @@
 #include "core/game/Dice.h"
 #include "core/ctrl/CtrlInterfaces.h"
 #include "core/ctrl/DumbCtrl.h"
+#include "core/ctrl/ExpertSystemCtrl.h"
 #include "core/ctrl/EvolveAICtrl.h"
 
 #include <iostream>
@@ -77,9 +78,9 @@ void Character::dump(std::ostream &stream) {
            << "RA: " << ra << std::endl
            << "AT: " << at << std::endl
            << "DF: " << df << std::endl
-           << "SP: " << toString(sp) << std::endl;
-           //<< "Attack AI: " << aai->getName() << std::endl
-           //<< "Defend AI: " << dai->getName() << std::endl;
+           << "SP: " << toString(sp) << std::endl
+           << "Attack AI: " << actrl->getName() << std::endl
+           << "Defend AI: " << dctrl->getName() << std::endl;
     for(auto const& m : moves) {
         if(!m.isSpecial() && !m.isSuper()) {
             continue;
@@ -123,11 +124,27 @@ std::shared_ptr<Character> generateRandomCharacter() {
     std::uniform_int_distribution<int> rsp(SP_BEGIN__, SP_END__ - 1);
     SPMode sp = static_cast<SPMode>(rsp(getRandomGenerator()));
 
-    auto actrl = (sp == SP_COMBO) ? std::make_shared<ctrl::MarkovAIAttack>()
-                                  : std::make_shared<ctrl::EvolveAIAttack>();
+    std::shared_ptr<ctrl::AttackControl> actrl;
+    std::shared_ptr<ctrl::DefendControl> dctrl;
+
+    // 40% Evolving, 60% Expert System
+    if(rra(getRandomGenerator()) < 3) {
+        // Evolving.
+        actrl = (sp == SP_COMBO) ? std::make_shared<ctrl::MarkovAIAttack>()
+                                 : std::make_shared<ctrl::EvolveAIAttack>();
+        dctrl = std::make_shared<ctrl::EvolveAIDefence>();
+    }
+    else {
+        // Expert System.
+        std::uniform_int_distribution<int> expert_sys(
+            0, ctrl::getNumExpertSystemsCombinations() - 1);
+        int combination = expert_sys(getRandomGenerator());
+        actrl = ctrl::getAttackExpertSystem(combination);
+        dctrl = ctrl::getDefenceExpertSystem(combination);
+    }
+
     std::shared_ptr<Character> c = std::make_shared<Character>(
-        ss.str(), ra, at, df, sp, actrl,
-        std::make_shared<ctrl::EvolveAIDefence>());
+        ss.str(), ra, at, df, sp, actrl, dctrl);
 
     std::vector<MoveSymbol> first_move, second_move, third_move, super_move;
     std::uniform_int_distribution<int> rms(MS_BEGIN__, MS_END__ - 1);

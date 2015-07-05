@@ -60,6 +60,8 @@ namespace ctrl {
 
 InteractiveAttackControl::~InteractiveAttackControl() {}
 
+char const * const InteractiveAttackControl::getName() const { return "Interactive"; }
+
 int InteractiveAttackControl::shouldSpendAPToGainSP(game::Character const &me,
                           game::Character const &opponent,
                           bool far) {
@@ -160,6 +162,8 @@ void InteractiveAttackControl::updateAfterMatch(game::Character const &me,
 
 
 InteractiveDefenceControl::~InteractiveDefenceControl() {}
+
+char const * const InteractiveDefenceControl::getName() const { return "Interactive"; }
 
 game::Move const & InteractiveDefenceControl::getCounterMove(game::Character const &me,
                                   game::Character const &opponent,

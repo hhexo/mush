@@ -37,6 +37,9 @@ public:
     /// \brief Virtual destructor.
     virtual ~AttackControl();
 
+    /// \brief Provides the name of the control system.
+    virtual char const * const getName() const = 0;
+
     /// \brief Decides how many AP to spend to gain SP (in SP_AP mode).
     virtual int shouldSpendAPToGainSP(game::Character const &me,
                                       game::Character const &opponent,
@@ -106,6 +109,9 @@ class DefendControl {
 public:
     /// \brief Virtual destructor.
     virtual ~DefendControl();
+
+    /// \brief Provides the name of the control system.
+    virtual char const * const getName() const = 0;
 
     /// \brief Decides the counter move based on the parameters; if the move
     ///        is a MT_WAIT move, it means that we do not wish to counter.
