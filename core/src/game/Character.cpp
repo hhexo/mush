@@ -39,7 +39,8 @@ static std::string const s_sp_mode_names[] = {
     "Combo", "Damage", "AP", "Wounds", "Defence"
 };
 SPMode operator++(SPMode& sp) {
-    return static_cast<SPMode>(static_cast<int>(sp) + 1);
+    auto i = std::underlying_type<SPMode>::type(sp) + 1;
+    return sp = (SPMode)(i);
 }
 SPMode operator*(SPMode sp) { return sp; }
 SPMode begin(SPMode) { return SP_BEGIN__; }

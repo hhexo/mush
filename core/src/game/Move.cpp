@@ -27,7 +27,8 @@ static std::string const s_move_symbol_names[] = {
     "Reflect", "UltraAgility", "UltraHardness"
 };
 MoveSymbol operator++(MoveSymbol &m) { 
-    return static_cast<MoveSymbol>(static_cast<int>(m) + 1);
+    auto i = std::underlying_type<MoveSymbol>::type(m) + 1;
+    return m = (MoveSymbol)(i);
 }
 MoveSymbol operator*(MoveSymbol m) { return m; }
 MoveSymbol begin(MoveSymbol) { return MS_BEGIN__; }
@@ -42,7 +43,8 @@ static std::string const s_move_type_names[] = {
     "Wait", "Normal", "Special", "Super"
 };
 MoveType operator++(MoveType& m) {
-    return static_cast<MoveType>(static_cast<int>(m) + 1);
+    auto i = std::underlying_type<MoveType>::type(m) + 1;
+    return m = (MoveType)(i);
 }
 MoveType operator*(MoveType m) { return m; }
 MoveType begin(MoveType) { return MT_BEGIN__; }
