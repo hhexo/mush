@@ -758,7 +758,7 @@ bool Duel::performAttack(Character &attacker, Character &defender,
     }
 
     // Report resolution
-    if(m_report_stream && actual_damage > 0) {
+    if(m_report_stream) {
         if(can_defend) {
             *m_report_stream << "... and hits for " << actual_damage 
                              << " damage!" << std::endl;
