@@ -144,7 +144,7 @@ public:
 };
 
 /// \brief Generates a character with random values, moves and AI.
-std::shared_ptr<Character> generateRandomCharacter();
+std::shared_ptr<Character> generateRandomCharacter(bool allow_expert_systems = false);
 
 }
 }

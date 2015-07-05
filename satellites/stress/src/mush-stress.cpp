@@ -37,6 +37,7 @@ using namespace core::chars;
 bool progress = false;
 bool verbose = false;
 bool threaded = false;
+bool expert_systems = false;
 int extra_chars = 0;
 
 bool parseCommandLine(int argc, char* argv[]) {
@@ -48,6 +49,8 @@ bool parseCommandLine(int argc, char* argv[]) {
             progress = true;
         } else if(arg == std::string("-t")) {
             threaded = true;
+        } else if(arg == std::string("-e")) {
+            expert_systems = true;
         } else if(arg[0] == '-' && arg[1] == 'c') {
             if(arg.length() > 2) {
                 extra_chars = std::stoi(arg.substr(2, arg.npos).c_str());
@@ -89,6 +92,7 @@ int usage() {
               << "    -p     : Print progress on stderr." << std::endl
               << "    -v     : Verbose (chronicle for debugging)." << std::endl
               << "    -t     : Multi-threaded mode. CPU intensive." << std::endl
+              << "    -e     : Use expert systems instead of evolving AIs." << std::endl
               << "    -s <n> : Random number generator seed." << std::endl
               << std::endl;
     return 1;
@@ -137,13 +141,13 @@ int run() {
                       siege_of_syde_characters.cbegin(), 
                       siege_of_syde_characters.cend());
     for(int i = 0; i < extra_chars; ++i) {
-        auto c = generateRandomCharacter();
+        auto c = generateRandomCharacter(expert_systems);
         characters.push_back(c);
     }
 
     // Handle automated batch of fights first...
     std::vector<std::pair<std::shared_ptr<Character>, std::shared_ptr<Character>>> fights;
-    for(int i = 0; i < (extra_chars == 0 ? 500 : 5); ++i) {
+    for(int i = 0; i < (extra_chars == 0 ? 500 : 10); ++i) {
         for(auto const &c1 : characters) {
             for(auto const &c2 : characters) {
                 if(c1 != c2) {

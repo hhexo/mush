@@ -109,7 +109,7 @@ void Character::brief(std::ostream &stream) {
     }
 }
 
-std::shared_ptr<Character> generateRandomCharacter() {
+std::shared_ptr<Character> generateRandomCharacter(bool allow_expert_systems) {
     static size_t counter = 0ULL;
     std::lock_guard<std::mutex> lock(getRandomGenMutex());
     std::stringstream ss;
@@ -127,8 +127,8 @@ std::shared_ptr<Character> generateRandomCharacter() {
     std::shared_ptr<ctrl::AttackControl> actrl;
     std::shared_ptr<ctrl::DefendControl> dctrl;
 
-    // 40% Evolving, 60% Expert System
-    if(rra(getRandomGenerator()) < 3) {
+    // If expert systems are allowed, choose 40% Evolving, 60% Expert System
+    if(!allow_expert_systems || rra(getRandomGenerator()) < 3) {
         // Evolving.
         actrl = (sp == SP_COMBO) ? std::make_shared<ctrl::MarkovAIAttack>()
                                  : std::make_shared<ctrl::EvolveAIAttack>();

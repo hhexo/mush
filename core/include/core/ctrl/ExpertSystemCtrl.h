@@ -21,6 +21,14 @@
 namespace core {
 namespace ctrl {
 
+
+
+// ========================================================================
+//    ATTACK EXPERT SYSTEMS
+// ========================================================================
+
+
+
 /**
  * \brief This class implements the Grunt expert system in attack.
  */
@@ -110,9 +118,8 @@ public:
 };
 
 
-#if 0
 /**
- * \brief .
+ * \brief This class implements the Buffer expert system in attack.
  */
 class BufferAtk : public DumbAttackControl {
 public:
@@ -124,10 +131,6 @@ public:
                               game::Character const &opponent,
                               bool far) override;
 
-    bool shouldSpendAPToFallStanding(game::Character const &me,
-                                     game::Character const &opponent,
-                                     bool far) override;
-
     game::Move const & getNextMove(game::Character const &me,
                                    game::Character const &opponent,
                                    bool far) override;
@@ -157,19 +160,10 @@ public:
                                     game::Character const &opponent,
                                     bool far,
                                     game::Move const &my_move) override;
-
-    void updateAfterMove(game::Character const &me,
-                         game::Character const &opponent,
-                         game::Move const &move, bool successful) override;
-
-    void updateAfterMatch(game::Character const &me,
-                          game::Character const &opponent,
-                          bool has_won) override;
 };
 
-
 /**
- * \brief .
+ * \brief This class implements the CounterAttacker expert system in attack.
  */
 class CounterAttackerAtk : public DumbAttackControl {
 public:
@@ -181,52 +175,13 @@ public:
                               game::Character const &opponent,
                               bool far) override;
 
-    bool shouldSpendAPToFallStanding(game::Character const &me,
-                                     game::Character const &opponent,
-                                     bool far) override;
-
     game::Move const & getNextMove(game::Character const &me,
                                    game::Character const &opponent,
                                    bool far) override;
-
-    bool shouldSpendSPToLowerAPCost(game::Character const &me,
-                                    game::Character const &opponent,
-                                    bool far,
-                                    game::Move const &my_move,
-                                    int current_ap_cost) override;
-
-    bool shouldSpendSPToConcatenate(game::Character const &me,
-                                    game::Character const &opponent,
-                                    bool far,
-                                    game::Move const &my_move) override;
-
-    bool shouldSpendSPForUltraAgility(game::Character const &me,
-                                      game::Character const &opponent,
-                                      bool far,
-                                      game::Move const &my_move) override;
-
-    bool shouldSpendSPToBoostAttack(game::Character const &me,
-                                    game::Character const &opponent,
-                                    bool far,
-                                    game::Move const &my_move) override;
-
-    bool shouldSpendSPToBoostDamage(game::Character const &me,
-                                    game::Character const &opponent,
-                                    bool far,
-                                    game::Move const &my_move) override;
-
-    void updateAfterMove(game::Character const &me,
-                         game::Character const &opponent,
-                         game::Move const &move, bool successful) override;
-
-    void updateAfterMatch(game::Character const &me,
-                          game::Character const &opponent,
-                          bool has_won) override;
 };
 
-
 /**
- * \brief .
+ * \brief This class implements the KillerChain expert system in attack.
  */
 class KillerChainAtk : public DumbAttackControl {
 public:
@@ -238,10 +193,6 @@ public:
                               game::Character const &opponent,
                               bool far) override;
 
-    bool shouldSpendAPToFallStanding(game::Character const &me,
-                                     game::Character const &opponent,
-                                     bool far) override;
-
     game::Move const & getNextMove(game::Character const &me,
                                    game::Character const &opponent,
                                    bool far) override;
@@ -271,23 +222,14 @@ public:
                                     game::Character const &opponent,
                                     bool far,
                                     game::Move const &my_move) override;
-
-    void updateAfterMove(game::Character const &me,
-                         game::Character const &opponent,
-                         game::Move const &move, bool successful) override;
-
-    void updateAfterMatch(game::Character const &me,
-                          game::Character const &opponent,
-                          bool has_won) override;
 };
 
-
 /**
- * \brief .
+ * \brief This class implements the Kite or Sniper expert system in attack.
  */
-class KiteAtk : public DumbAttackControl {
+class KiteSniperAtk : public DumbAttackControl {
 public:
-    virtual ~KiteAtk();
+    virtual ~KiteSniperAtk();
 
     char const * const getName() const override;
 
@@ -295,10 +237,6 @@ public:
                               game::Character const &opponent,
                               bool far) override;
 
-    bool shouldSpendAPToFallStanding(game::Character const &me,
-                                     game::Character const &opponent,
-                                     bool far) override;
-
     game::Move const & getNextMove(game::Character const &me,
                                    game::Character const &opponent,
                                    bool far) override;
@@ -328,19 +266,10 @@ public:
                                     game::Character const &opponent,
                                     bool far,
                                     game::Move const &my_move) override;
-
-    void updateAfterMove(game::Character const &me,
-                         game::Character const &opponent,
-                         game::Move const &move, bool successful) override;
-
-    void updateAfterMatch(game::Character const &me,
-                          game::Character const &opponent,
-                          bool has_won) override;
 };
 
-
 /**
- * \brief .
+ * \brief This class implements the Sniper expert system in attack.
  */
 class SniperAtk : public DumbAttackControl {
 public:
@@ -352,10 +281,6 @@ public:
                               game::Character const &opponent,
                               bool far) override;
 
-    bool shouldSpendAPToFallStanding(game::Character const &me,
-                                     game::Character const &opponent,
-                                     bool far) override;
-
     game::Move const & getNextMove(game::Character const &me,
                                    game::Character const &opponent,
                                    bool far) override;
@@ -385,19 +310,10 @@ public:
                                     game::Character const &opponent,
                                     bool far,
                                     game::Move const &my_move) override;
-
-    void updateAfterMove(game::Character const &me,
-                         game::Character const &opponent,
-                         game::Move const &move, bool successful) override;
-
-    void updateAfterMatch(game::Character const &me,
-                          game::Character const &opponent,
-                          bool has_won) override;
 };
 
-
 /**
- * \brief .
+ * \brief This class implements the Balanced expert system in attack.
  */
 class BalancedAtk : public DumbAttackControl {
 public:
@@ -409,10 +325,6 @@ public:
                               game::Character const &opponent,
                               bool far) override;
 
-    bool shouldSpendAPToFallStanding(game::Character const &me,
-                                     game::Character const &opponent,
-                                     bool far) override;
-
     game::Move const & getNextMove(game::Character const &me,
                                    game::Character const &opponent,
                                    bool far) override;
@@ -442,19 +354,10 @@ public:
                                     game::Character const &opponent,
                                     bool far,
                                     game::Move const &my_move) override;
-
-    void updateAfterMove(game::Character const &me,
-                         game::Character const &opponent,
-                         game::Move const &move, bool successful) override;
-
-    void updateAfterMatch(game::Character const &me,
-                          game::Character const &opponent,
-                          bool has_won) override;
 };
 
-
 /**
- * \brief .
+ * \brief This class implements the Tactical expert system in attack.
  */
 class TacticalAtk : public DumbAttackControl {
 public:
@@ -466,10 +369,6 @@ public:
                               game::Character const &opponent,
                               bool far) override;
 
-    bool shouldSpendAPToFallStanding(game::Character const &me,
-                                     game::Character const &opponent,
-                                     bool far) override;
-
     game::Move const & getNextMove(game::Character const &me,
                                    game::Character const &opponent,
                                    bool far) override;
@@ -499,18 +398,14 @@ public:
                                     game::Character const &opponent,
                                     bool far,
                                     game::Move const &my_move) override;
-
-    void updateAfterMove(game::Character const &me,
-                         game::Character const &opponent,
-                         game::Move const &move, bool successful) override;
-
-    void updateAfterMatch(game::Character const &me,
-                          game::Character const &opponent,
-                          bool has_won) override;
 };
 
 
-#endif
+
+// ========================================================================
+//    DEFENCE EXPERT SYSTEMS
+// ========================================================================
+
 
 
 /**
@@ -542,6 +437,253 @@ public:
                                       bool far,
                                       game::Move const &opponent_move) override;
 };
+
+/**
+ * \brief This class implements the Buffer expert system in defence.
+ */
+class BufferDef : public DumbDefendControl {
+public:
+    virtual ~BufferDef();
+
+    char const * const getName() const override;
+
+    game::Move const & getCounterMove(game::Character const &me,
+                                      game::Character const &opponent,
+                                      bool far,
+                                      game::Move const &opponent_move) override;
+
+    bool shouldSpendSPToLowerAPCost(game::Character const &me,
+                                    game::Character const &opponent,
+                                    bool far,
+                                    game::Move const &my_move,
+                                    int current_ap_cost) override;
+
+    bool shouldSpendSPForUltraAgility(game::Character const &me,
+                                      game::Character const &opponent,
+                                      bool far,
+                                      game::Move const &my_move) override;
+
+    bool shouldSpendSPToBoostDefence(game::Character const &me,
+                                     game::Character const &opponent,
+                                     bool far,
+                                     game::Move const &my_move) override;
+
+    bool shouldSpendSPToBoostCounterDamage(game::Character const &me,
+                                           game::Character const &opponent,
+                                           bool far,
+                                           game::Move const &my_move) override;
+};
+
+/**
+ * \brief This class implements the CounterAttacker expert system in defence.
+ */
+class CounterAttackerDef : public DumbDefendControl {
+public:
+    virtual ~CounterAttackerDef();
+
+    char const * const getName() const override;
+
+    game::Move const & getCounterMove(game::Character const &me,
+                                      game::Character const &opponent,
+                                      bool far,
+                                      game::Move const &opponent_move) override;
+
+    bool shouldSpendSPToComboBreak(game::Character const &me,
+                                   game::Character const &opponent,
+                                   bool far,
+                                   game::Move const &opponent_move) override;
+
+    bool shouldSpendSPToLowerAPCost(game::Character const &me,
+                                    game::Character const &opponent,
+                                    bool far,
+                                    game::Move const &my_move,
+                                    int current_ap_cost) override;
+
+    bool shouldSpendSPForUltraAgility(game::Character const &me,
+                                      game::Character const &opponent,
+                                      bool far,
+                                      game::Move const &my_move) override;
+
+    bool shouldSpendSPToBoostDefence(game::Character const &me,
+                                     game::Character const &opponent,
+                                     bool far,
+                                     game::Move const &my_move) override;
+
+    bool shouldSpendSPToBoostCounterDamage(game::Character const &me,
+                                           game::Character const &opponent,
+                                           bool far,
+                                           game::Move const &my_move) override;
+};
+
+/**
+ * \brief This class implements the Killer Chain expert system in defence.
+ */
+class KillerChainDef : public DumbDefendControl {
+public:
+    virtual ~KillerChainDef();
+
+    char const * const getName() const override;
+
+    game::Move const & getCounterMove(game::Character const &me,
+                                      game::Character const &opponent,
+                                      bool far,
+                                      game::Move const &opponent_move) override;
+};
+
+/**
+ * \brief This class implements the Kite expert system in defence.
+ */
+class KiteDef : public DumbDefendControl {
+public:
+    virtual ~KiteDef();
+
+    char const * const getName() const override;
+
+    game::Move const & getCounterMove(game::Character const &me,
+                                      game::Character const &opponent,
+                                      bool far,
+                                      game::Move const &opponent_move) override;
+
+    bool shouldSpendSPToLowerAPCost(game::Character const &me,
+                                    game::Character const &opponent,
+                                    bool far,
+                                    game::Move const &my_move,
+                                    int current_ap_cost) override;
+
+    bool shouldSpendSPForUltraAgility(game::Character const &me,
+                                      game::Character const &opponent,
+                                      bool far,
+                                      game::Move const &my_move) override;
+
+    bool shouldSpendSPToBoostDefence(game::Character const &me,
+                                     game::Character const &opponent,
+                                     bool far,
+                                     game::Move const &my_move) override;
+
+    bool shouldSpendSPToBoostCounterDamage(game::Character const &me,
+                                           game::Character const &opponent,
+                                           bool far,
+                                           game::Move const &my_move) override;
+};
+
+/**
+ * \brief This class implements the Sniper expert system in defence.
+ */
+class SniperDef : public DumbDefendControl {
+public:
+    virtual ~SniperDef();
+
+    char const * const getName() const override;
+
+    game::Move const & getCounterMove(game::Character const &me,
+                                      game::Character const &opponent,
+                                      bool far,
+                                      game::Move const &opponent_move) override;
+
+    bool shouldSpendSPToLowerAPCost(game::Character const &me,
+                                    game::Character const &opponent,
+                                    bool far,
+                                    game::Move const &my_move,
+                                    int current_ap_cost) override;
+
+    bool shouldSpendSPForUltraAgility(game::Character const &me,
+                                      game::Character const &opponent,
+                                      bool far,
+                                      game::Move const &my_move) override;
+
+    bool shouldSpendSPToBoostDefence(game::Character const &me,
+                                     game::Character const &opponent,
+                                     bool far,
+                                     game::Move const &my_move) override;
+
+    bool shouldSpendSPToBoostCounterDamage(game::Character const &me,
+                                           game::Character const &opponent,
+                                           bool far,
+                                           game::Move const &my_move) override;
+};
+
+/**
+ * \brief This class implements the Balanced expert system in defence.
+ */
+class BalancedDef : public DumbDefendControl {
+public:
+    virtual ~BalancedDef();
+
+    char const * const getName() const override;
+
+    game::Move const & getCounterMove(game::Character const &me,
+                                      game::Character const &opponent,
+                                      bool far,
+                                      game::Move const &opponent_move) override;
+
+    bool shouldSpendSPToLowerAPCost(game::Character const &me,
+                                    game::Character const &opponent,
+                                    bool far,
+                                    game::Move const &my_move,
+                                    int current_ap_cost) override;
+
+    bool shouldSpendSPForUltraAgility(game::Character const &me,
+                                      game::Character const &opponent,
+                                      bool far,
+                                      game::Move const &my_move) override;
+
+    bool shouldSpendSPToBoostDefence(game::Character const &me,
+                                     game::Character const &opponent,
+                                     bool far,
+                                     game::Move const &my_move) override;
+
+    bool shouldSpendSPToBoostCounterDamage(game::Character const &me,
+                                           game::Character const &opponent,
+                                           bool far,
+                                           game::Move const &my_move) override;
+};
+
+/**
+ * \brief This class implements the Tactical expert system in defence.
+ */
+class TacticalDef : public DumbDefendControl {
+public:
+    ~TacticalDef();
+
+    char const * const getName() const override;
+
+    game::Move const & getCounterMove(game::Character const &me,
+                                      game::Character const &opponent,
+                                      bool far,
+                                      game::Move const &opponent_move) override;
+
+    bool shouldSpendSPToComboBreak(game::Character const &me,
+                                   game::Character const &opponent,
+                                   bool far,
+                                   game::Move const &opponent_move) override;
+
+    bool shouldSpendSPToLowerAPCost(game::Character const &me,
+                                    game::Character const &opponent,
+                                    bool far,
+                                    game::Move const &my_move,
+                                    int current_ap_cost) override;
+
+    bool shouldSpendSPForUltraAgility(game::Character const &me,
+                                      game::Character const &opponent,
+                                      bool far,
+                                      game::Move const &my_move) override;
+
+    bool shouldSpendSPToBoostDefence(game::Character const &me,
+                                     game::Character const &opponent,
+                                     bool far,
+                                     game::Move const &my_move) override;
+
+    bool shouldSpendSPToBoostCounterDamage(game::Character const &me,
+                                           game::Character const &opponent,
+                                           bool far,
+                                           game::Move const &my_move) override;
+};
+
+
+
+// ========================================================================
+//    UTILITY FUNCTIONS
+// ========================================================================
 
 
 
