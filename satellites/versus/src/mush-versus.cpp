@@ -24,6 +24,8 @@
 #include "core/game/Duel.h"
 #include "core/chars/NamedCharacters.h"
 #include "core/ctrl/InteractiveCtrl.h"
+#include "core/ctrl/EvolveAICtrl.h"
+#include "core/ctrl/ExpertSystemCtrl.h"
 
 namespace {
 
@@ -62,6 +64,96 @@ int askNumber(std::string message) {
         return std::stoi(reply);
     }
     return 0; // Just to satisfy compiler.
+}
+
+std::shared_ptr<Character> interactiveCreateCharacter() {
+    // Name
+    std::string name;
+    std::cout << "Please input the character's name: ";
+    std::getline(std::cin, name);
+    // Stats
+    int ra = 0; int at = 0; int df = 0;
+    while(ra + at + df != 7) {
+        std::cout << "Please input the character's stat values "
+                  << "(that must add up to 7)." << std::endl;
+        ra = askNumber("Choose character's RA.");
+        at = askNumber("Choose character's AT.");
+        df = askNumber("Choose character's DF.");
+    }
+    // SP Mode - trick with the iterable enum here. :-)
+    int sp = -1;
+    while(sp < 0 || sp >= (int)SP_END__) {
+        std::cout << "Available SP gain modes:" << std::endl;
+        for(auto sp : SPMode{}) {
+            std::cout << (int)sp << ") " << toString(sp) << std::endl;
+        }
+        sp = askNumber("Choose the character's SP mode.");
+    }
+    // AI
+    std::vector<std::pair<std::shared_ptr<AttackControl>, std::shared_ptr<DefendControl>>> ai_modes;
+    for(int i = 0; i < getNumExpertSystemsCombinations(); ++i) {
+        ai_modes.push_back(std::make_pair(getAttackExpertSystem(i), 
+                                          getDefenceExpertSystem(i)));
+    }
+    ai_modes.push_back(std::make_pair(std::make_shared<EvolveAIAttack>(), 
+                                      std::make_shared<EvolveAIDefence>()));
+    ai_modes.push_back(std::make_pair(std::make_shared<MarkovAIAttack>(), 
+                                      std::make_shared<EvolveAIDefence>()));
+    std::cout << "Available AI combinations:" << std::endl;
+    for(size_t i = 0; i < ai_modes.size(); ++i) {
+        std::cout << i << ") " << ai_modes[i].first->getName() << "," 
+                  << ai_modes[i].second->getName() << std::endl;
+    }
+    int ai = askNumber("Choose the character's AI combination.");
+    // Create character.
+    auto c = std::make_shared<Character>(name, ra, at, df, (SPMode)sp, 
+                                         ai_modes[ai].first, 
+                                         ai_modes[ai].second);
+    // Now populate moves.
+    std::cout << "We will now create the SPECIAL moves." << std::endl;
+    for(int i = 0; i < 3; ++i) {
+        std::string move_name;
+        std::cout << "Please input the name of the move number " << i << ": ";
+        std::getline(std::cin, move_name);
+        std::vector<MoveSymbol> move_symbols;
+        std::cout << "Available move symbols:" << std::endl;
+        for(auto ms : MoveSymbol{}) {
+            std::cout << (int)ms << ") " << toString(ms) << std::endl;
+        }
+        for(int j = 0; j < 4; ++j) {
+            int reply = askNumber("Please choose a move symbol, or type a number higher than the maximum to finish.");
+            if(reply >= (int)MS_END__) {
+                break;
+            }
+            move_symbols.push_back((MoveSymbol)reply);
+        }
+        c->addMove(Move{move_name, MT_SPECIAL, move_symbols});
+        std::cout << "Added move." << std::endl;
+    }
+    std::cout << "We will now create the SUPER move." << std::endl;
+    for(int i = 0; i < 1; ++i) {
+        std::string move_name;
+        std::cout << "Please input the name of the move number " << i << ": ";
+        std::getline(std::cin, move_name);
+        std::vector<MoveSymbol> move_symbols;
+        std::cout << "Available move symbols:" << std::endl;
+        for(auto ms : MoveSymbol{}) {
+            std::cout << (int)ms << ") " << toString(ms) << std::endl;
+        }
+        for(int j = 0; j < 4; ++j) {
+            int reply = askNumber("Please choose a move symbol, or type a number higher than the maximum to finish.");
+            if(reply >= (int)MS_END__) {
+                break;
+            }
+            move_symbols.push_back((MoveSymbol)reply);
+        }
+        c->addMove(Move{move_name, MT_SUPER, move_symbols});
+        std::cout << "Added move." << std::endl;
+    }
+    std::cout << "The resulting character is:" << std::endl;
+    c->dump(std::cout);
+    std::cout << std::endl;
+    return c;
 }
 
 
@@ -122,17 +214,21 @@ int run() {
     int  p2_char = 0;
     bool original = false;
     bool siege_of_syde = false;
+    bool created_character = false;
+    std::vector<std::shared_ptr<Character>> characters;
 
     original = askTrueFalse("Do you want the original characters?");
     siege_of_syde = askTrueFalse("Do you want the Siege of Syde characters?");
-
-    if(!original && !siege_of_syde) {
+    while(askTrueFalse("Do you want to create another character?")) {
+        created_character = true;
+        characters.push_back(interactiveCreateCharacter());
+    }
+    if(!original && !siege_of_syde && !created_character) {
         std::cout << "You have selected no characters! How can we have a match?"
                   << std::endl << "Sorry, exiting." << std::endl;
         return 1;
     }
 
-    std::vector<std::shared_ptr<Character>> characters;
     if(original) {
         std::vector<std::shared_ptr<Character>> original_characters = 
             core::chars::getOriginalCharacters();
@@ -189,8 +285,12 @@ int run() {
     for(size_t i = 0; i < characters.size(); ++i) {
         std::cout << i << ") " << characters[i]->name << std::endl;
     }
-    p1_char = askNumber("Which character do you want for Player 1?");
-    p2_char = askNumber("Which character do you want for Player 2?");
+    while(p1_char == p2_char) {
+        std::cout << "Please choose two different characters for the match."
+                  << std::endl;
+        p1_char = askNumber("Which character do you want for Player 1?");
+        p2_char = askNumber("Which character do you want for Player 2?");
+    }
 
     if(p1_char >= characters.size()) {
         std::cout << "Invalid character for Player 1!!!" << std::endl;
