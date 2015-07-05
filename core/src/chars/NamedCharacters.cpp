@@ -15,9 +15,8 @@
 #include "core/chars/NamedCharacters.h"
 
 #include "core/ctrl/DumbCtrl.h"
+#include "core/ctrl/ExpertSystemCtrl.h"
 #include "core/ctrl/EvolveAICtrl.h"
-//#include "AI.h"
-//#include "EvolveAI.h"
 
 namespace core {
 namespace chars {
@@ -299,7 +298,7 @@ std::vector<std::shared_ptr<game::Character>> getSiegeOfSydeCharacters() {
     // Ross
     c = std::make_shared<Character>(
         "Ross Garnet the Master of Axes", 4, 2, 1, SP_COMBO, 
-        std::make_shared<MarkovAIAttack>(),
+        std::make_shared<BrawlerAtk>(),
         std::make_shared<EvolveAIDefence>());
     c->addMove(Move{"Rising Quarter", MT_SPECIAL, 
                     {MS_THROW}});
@@ -393,7 +392,7 @@ std::vector<std::shared_ptr<game::Character>> getSiegeOfSydeCharacters() {
     // Scarlet
     c = std::make_shared<Character>(
         "Scarlet the Ardent Flame", 3, 2, 2, SP_COMBO, 
-        std::make_shared<MarkovAIAttack>(),
+        std::make_shared<BrawlerAtk>(),
         std::make_shared<EvolveAIDefence>());
     c->addMove(Move{"Flame Pillar", MT_SPECIAL, 
                     {MS_THROW}});

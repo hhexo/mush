@@ -102,7 +102,7 @@ bool GruntAtk::shouldSpendSPToBoostDamage(game::Character const &me,
 }
 
 
-static constexpr int const BRAWLER_AP_TO_ATTACK = 5;
+static constexpr int const BRAWLER_AP_TO_ATTACK = 6;
 
 BrawlerAtk::~BrawlerAtk() {}
 
@@ -151,7 +151,7 @@ game::Move const & BrawlerAtk::getNextMove(game::Character const &me,
         }
         int dmg = m.damage(1, me.at, me.df, 0);
         int combo = m.comboPoints();
-        float cur_goodness = ((float)dmg / 3.0f + (float)combo) / (float)(m.apCost(far, false));
+        float cur_goodness = dmg / (float)(m.apCost(far, false)) + (float)combo;
         if(m.hasThrow() && me.moves_performed.empty()) {
             // Skew towards throw on the first move
             cur_goodness += 5.0f;
@@ -271,7 +271,7 @@ game::Move const & BrawlerDef::getCounterMove(game::Character const &me,
         }
         int dmg = m.damage(1, me.at, me.df, 0);
         int combo = m.comboPoints();
-        float cur_goodness = ((float)dmg / 3.0f + (float)combo) / (float)(m.apCost(far, true));
+        float cur_goodness = dmg / (float)(m.apCost(far, true)) + (float)combo;
         if(m.hasThrow() && me.moves_performed.empty()) {
             // Skew towards throw on the counter move
             cur_goodness += 5.0f;
