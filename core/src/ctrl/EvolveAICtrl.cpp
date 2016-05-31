@@ -503,7 +503,7 @@ game::Move const & EvolveAIDefence::getCounterMove(game::Character const &me,
     }
 
     // Now commit to the move and store it in the current match list.
-    DecisionRecord cur_decision{opponent.down, opponent.air, opponent.df, 
+    DecisionRecord cur_decision{opponent.down, opponent.air, opponent.at, 
                                 me.cur_ap, me.cur_sp, which_move, 1.0};
     m_last_move_decisions[me.uid].push_back(cur_decision);
 
