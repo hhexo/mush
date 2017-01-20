@@ -18,6 +18,7 @@
 #include "core/ctrl/DumbCtrl.h"
 #include "core/ctrl/ExpertSystemCtrl.h"
 #include "core/ctrl/EvolveAICtrl.h"
+#include "core/ctrl/NNCtrl.h"
 
 #include <iostream>
 #include <sstream>
@@ -130,10 +131,16 @@ std::shared_ptr<Character> generateRandomCharacter(bool allow_expert_systems) {
 
     // If expert systems are allowed, choose 40% Evolving, 60% Expert System
     if(!allow_expert_systems || rra(getRandomGenerator()) < 3) {
-        // Evolving.
-        actrl = (sp == SP_COMBO) ? std::make_shared<ctrl::MarkovAIAttack>()
-                                 : std::make_shared<ctrl::EvolveAIAttack>();
-        dctrl = std::make_shared<ctrl::EvolveAIDefence>();
+        // 40% Evolving, 60% Neural Network.
+        if(rra(getRandomGenerator()) < 3) {
+            actrl = (sp == SP_COMBO) ? std::make_shared<ctrl::MarkovAIAttack>()
+                                     : std::make_shared<ctrl::EvolveAIAttack>();
+            dctrl = std::make_shared<ctrl::EvolveAIDefence>();
+        }
+        else {
+            actrl = std::make_shared<ctrl::NNAttackControl>();
+            dctrl = std::make_shared<ctrl::NNDefendControl>();
+        }
     }
     else {
         // Expert System.
